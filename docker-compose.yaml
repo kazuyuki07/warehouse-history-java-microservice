@@ -1,0 +1,34 @@
+services:
+  warehouse-history-service:
+    image: warehouse_history_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3080:3080"
+    environment:
+      DB_URI: jdbc:postgresql://warehouse-history-database:5432/warehouse_history
+      DB_USERNAME: postgres
+      DB_PASSWORD: root
+    depends_on:
+      - warehouse-history-database
+    networks:
+      - socksnet
+      - warehouse-history-db-net
+
+  warehouse-history-database:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: warehouse_history
+      POSTGRES_USER: postgres
+    ports:
+      - "4432:5432"
+    networks:
+      - warehouse-history-db-net
+
+networks:
+  socksnet:
+    external: true
+  warehouse-history-db-net:
+    driver: bridge

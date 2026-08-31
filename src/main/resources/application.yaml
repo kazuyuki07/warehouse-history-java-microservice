@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: WarehouseHistory
+
+  schedule:
+    cron: "0 0 0 * * SUN"
+    deadline-by-year: 5
+
+  datasource:
+    url: ${DB_URI}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog.yaml
+    enabled: true
+    drop-first: false
+    default-schema: public
+
+  jackson:
+    date-format: "dd.MM.yyyy HH:mm:ss"
+
+server:
+  port: 3080
