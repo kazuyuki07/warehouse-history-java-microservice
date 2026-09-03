@@ -6,5 +6,5 @@ CREATE TABLE IF NOT EXISTS warehouse_history (
     quantity INT NOT NULL CHECK (quantity >= 0),
     warehouse_id BIGINT NOT NULL CHECK (warehouse_id >= 0),
     date TIMESTAMP NOT NULL,
-    UNIQUE(event, color, cotton_part, quantity, date)
+    UNIQUE(event, color, cotton_part, quantity)
 );
