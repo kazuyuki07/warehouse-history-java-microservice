@@ -3,6 +3,10 @@ spring:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
     url: jdbc:tc:postgresql:latest:///warehouse_history_test
 
+  schedule:
+    cron: "0 * * * * *"
+    deadline-by-year: 5
+
   liquibase:
     change-log: classpath:db/changelog/db.changelog.yaml
     enabled: true

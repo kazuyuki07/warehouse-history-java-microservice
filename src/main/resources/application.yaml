@@ -7,9 +7,9 @@ spring:
     deadline-by-year: 5
 
   datasource:
-    url: ${DB_URI}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: ${DB_URI:jdbc:postgresql://127.0.0.1:4432/warehouse_history_service}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:root}
     driver-class-name: org.postgresql.Driver
 
   liquibase:

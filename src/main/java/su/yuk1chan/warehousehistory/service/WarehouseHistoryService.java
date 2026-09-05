@@ -1,12 +1,10 @@
 package su.yuk1chan.warehousehistory.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import su.yuk1chan.warehousehistory.dto.PagedResponse;
 import su.yuk1chan.warehousehistory.dto.WarehouseHistoryDTO;
@@ -18,7 +16,6 @@ import su.yuk1chan.warehousehistory.repository.WarehouseHistoryRepository;
 import su.yuk1chan.warehousehistory.repository.specification.WarehouseHistorySpecification;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -71,18 +68,5 @@ public class WarehouseHistoryService {
     public WarehouseHistory writeHistory(WarehouseHistoryDTO warehouseHistoryDTO) {
         WarehouseHistory warehouseHistory = warehouseHistoryMapper.warehouseHistoryDTOToWarehouseHistory(warehouseHistoryDTO);
         return warehouseHistoryRepository.save(warehouseHistory);
-    }
-
-    @Scheduled(cron = "${spring.schedule.cron}")
-    private void clearDate(@Value("${spring.schedule.deadline-by-year}") Integer deadlineByYear) {
-        List<Long> idListByDate = warehouseHistoryRepository.getIdListByDate(
-                deadlineByYear,
-                LocalDateTime.now().getYear() // я не хотел получать год через бд, если оно работает отдельно от сервиса
-        );
-        if (idListByDate.isEmpty()) {
-            return;
-        }
-
-        warehouseHistoryRepository.deleteAllById(idListByDate);
     }
 }

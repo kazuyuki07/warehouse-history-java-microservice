@@ -14,8 +14,10 @@ import su.yuk1chan.warehousehistory.repository.WarehouseHistoryRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -218,10 +220,13 @@ public class WarehouseHistoryServiceTest {
                         .build()
         );
 
-        cleanData();
+        await()
+                .atMost(70, TimeUnit.SECONDS)
+                .untilAsserted(() -> {
+                    assertThat(warehouseHistoryRepository.findById(warehouseHistory.getId())).isEmpty();
+                    assertThat(warehouseHistoryRepository.findById(warehouseHistory1.getId())).isEmpty();
+                });
 
-        assertThat(warehouseHistoryRepository.findById(warehouseHistory.getId())).isEmpty();
-        assertThat(warehouseHistoryRepository.findById(warehouseHistory1.getId())).isEmpty();
-        assertThat(warehouseHistoryRepository.findById(warehouseHistory2.getId())).isNotNull();
+        assertThat(warehouseHistoryRepository.findById(warehouseHistory2.getId())).isPresent();
     }
 }
