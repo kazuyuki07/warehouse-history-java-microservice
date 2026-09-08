@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class WarehouseHistoryDTO {
     @NotNull(message = "Событие не должно быть пустым")
     private Event event;
