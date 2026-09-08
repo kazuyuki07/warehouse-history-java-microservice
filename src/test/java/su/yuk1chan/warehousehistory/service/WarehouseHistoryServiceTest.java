@@ -13,6 +13,7 @@ import su.yuk1chan.warehousehistory.repository.WarehouseHistoryRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -71,7 +72,7 @@ public class WarehouseHistoryServiceTest {
                         .quantity(200)
                         .currentQuantity(200)
                         .warehouseId(7L)
-                        .date(LocalDateTime.now())
+                        .date(LocalDateTime.now().truncatedTo(ChronoUnit.MICROS))
                         .build()
         );
         WarehouseHistoryDTO expected = warehouseHistoryMapper.warehouseHistoryToWarehouseHistoryDTO(warehouseHistory);
@@ -105,7 +106,7 @@ public class WarehouseHistoryServiceTest {
                         .quantity(102)
                         .currentQuantity(102)
                         .warehouseId(10L)
-                        .date(LocalDateTime.now())
+                        .date(LocalDateTime.now().truncatedTo(ChronoUnit.MICROS))
                         .build()
         );
         WarehouseHistoryDTO expected = warehouseHistoryMapper.warehouseHistoryToWarehouseHistoryDTO(warehouseHistory);
