@@ -1,6 +1,5 @@
 package su.yuk1chan.warehousehistory.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -56,7 +55,7 @@ public class WarehouseHistoryController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public WarehouseHistoryDTO writeHistory(@Valid @RequestBody WarehouseHistoryDTO warehouseHistoryDTO) {
+    public WarehouseHistoryDTO writeHistory(@RequestBody WarehouseHistoryDTO warehouseHistoryDTO) {
         WarehouseHistory warehouseHistory = warehouseHistoryService.writeHistory(warehouseHistoryDTO);
         return new WarehouseHistoryDTO(
                 warehouseHistory.getEvent(),
